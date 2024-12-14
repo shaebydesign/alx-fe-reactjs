@@ -1,7 +1,14 @@
+import React from 'react';
+
 const MainContent = () => {
   return (
-    <main style={{ padding: '20px', backgroundColor: '#f4f4f4', lineHeight: '1.6' }}>
-      <p>Welcome to the application. Enjoy exploring!</p>
+    <main style={{ padding: '20px', backgroundColor: '#f4f4f4' }}>
+      <h2 style={{ textAlign: 'center', color: 'darkblue' }}>Explore Your Favorite Cities</h2>
+      <p style={{ fontSize: '18px', lineHeight: '1.6' }}>
+        Cities around the world are waiting for you to explore. From cultural landmarks to vibrant streets, 
+        each city has its unique charm.
+      </p>
+      <p>I love to visit New York, Paris, and Tokyo.</p>
     </main>
   );
 };
