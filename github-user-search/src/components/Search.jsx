@@ -1,41 +1,43 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
-const Search = () => {
-    const [username, setUsername] = useState('');
-    const [error, setError] = useState(null);
-    const navigate = useNavigate();
+const Search = ({ onSearch }) => {
+  const [username, setUsername] = useState('');
+  const [location, setLocation] = useState('');
+  const [minRepos, setMinRepos] = useState('');
 
-    const handleSearch = async (e) => {
-        e.preventDefault();
-        setError(null); // Reset error before each search
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSearch({ username, location, minRepos });
+  };
 
-        try {
-            const response = await axios.get(`https://api.github.com/users/${username}`);
-            // Navigate to the user card page with the username as part of the URL
-            navigate(`/user/${username}`);
-        } catch (err) {
-            setError('User not found. Please try again.');
-        }
-    };
-
-    return (
-        <div>
-            <h2>Search for GitHub Users</h2>
-            <form onSubmit={handleSearch}>
-                <input
-                    type="text"
-                    placeholder="Enter GitHub username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <button type="submit">Search</button>
-            </form>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-        </div>
-    );
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 p-4">
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="GitHub Username"
+        className="p-2 border rounded"
+      />
+      <input
+        type="text"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        placeholder="Location"
+        className="p-2 border rounded"
+      />
+      <input
+        type="number"
+        value={minRepos}
+        onChange={(e) => setMinRepos(e.target.value)}
+        placeholder="Min Repositories"
+        className="p-2 border rounded"
+      />
+      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        Search
+      </button>
+    </form>
+  );
 };
 
 export default Search;
-
