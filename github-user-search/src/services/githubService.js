@@ -2,30 +2,30 @@ import axios from 'axios';
 
 const searchUsers = async (query, location = '', minRepos = 0) => {
   try {
-    // Build the search query with the provided filters
     let searchQuery = `${query}+in:login`; // Default search by username
+
+    // Append location if provided
     if (location) {
-      searchQuery += `+location:${location}`; // Add location filter if provided
-    }
-    if (minRepos) {
-      searchQuery += `+repos:>${minRepos}`; // Add minimum repositories filter if provided
+      searchQuery += `+location:${location}`;
     }
 
-    // Send GET request to GitHub API
+    // Append minRepos if provided
+    if (minRepos > 0) {
+      searchQuery += `+repos:>${minRepos}`;
+    }
+
     const response = await axios.get(`https://api.github.com/search/users?q=${searchQuery}`);
-
-    // Ensure the API responds with valid data (checking for potential API structure changes)
-    if (response && response.data && response.data.items) {
-      return response.data; // Return the list of users
+    
+    if (response.data && response.data.items) {
+      return response.data; // Return the users found
     } else {
-      throw new Error('No user data found');
+      return { items: [] }; // Return empty array if no results
     }
   } catch (error) {
     console.error('Error fetching users:', error);
-    throw error; // Throw error to be handled in the calling component
+    throw error; // Propagate error for further handling in component
   }
 };
 
-export default {
-  searchUsers
-};
+export default { searchUsers };
+

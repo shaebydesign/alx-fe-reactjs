@@ -1,52 +1,86 @@
 import React, { useState, useEffect } from 'react';
-import githubService from '../services/githubService'; // Assuming this is where the API calls are made
+import githubService from '../services/githubService'; // Make sure the import path is correct
 
 const Search = () => {
-  const [query, setQuery] = useState(''); // Query input state
-  const [users, setUsers] = useState([]); // Users array state
-  const [loading, setLoading] = useState(false); // Loading state for async operation
-  const [error, setError] = useState(''); // Error state for API call
+  // State variables
+  const [query, setQuery] = useState(''); // Username query
+  const [location, setLocation] = useState(''); // Location query
+  const [minRepos, setMinRepos] = useState(0); // Minimum repositories query
+  const [users, setUsers] = useState([]); // Users array to store search results
+  const [loading, setLoading] = useState(false); // Loading state
+  const [error, setError] = useState(''); // Error message state
 
-  // Fetch data using async/await
-  const fetchUsers = async () => {
-    if (!query) return; // Don't make API call if query is empty
-    setLoading(true); // Set loading to true when starting the fetch
+  // The function that triggers the API request
+  const fetchUserData = async () => {
+    // Don't search if no query is entered
+    if (!query) return;
+
+    setLoading(true); // Set loading state to true
+
     try {
-      const response = await githubService.searchUsers(query); // API call to fetch users
-      setUsers(response.data.items); // Save the users into state
-      setLoading(false); // Set loading to false once data is fetched
+      // Call githubService's searchUsers method, passing query, location, and minRepos
+      const response = await githubService.searchUsers(query, location, minRepos);
+
+      // If the API returns data, store it in the users state
+      if (response && response.items) {
+        setUsers(response.items);
+      } else {
+        setUsers([]);
+      }
+
+      setLoading(false); // Set loading state to false after fetching
     } catch (err) {
-      setError('Failed to fetch users'); // Handle error if the API call fails
-      setLoading(false); // Set loading to false in case of an error
+      // Handle any errors that occur during the API request
+      setError('Error fetching users');
+      setLoading(false); // Set loading state to false in case of an error
     }
   };
 
-  // Trigger fetch when query changes
+  // Trigger the fetchUserData function whenever query, location, or minRepos changes
   useEffect(() => {
-    fetchUsers(); // Call fetchUsers whenever the query changes
-  }, [query]);
+    fetchUserData();
+  }, [query, location, minRepos]);
 
   return (
     <div className="search-container">
-      {/* Input field for user search */}
+      {/* Input field for GitHub username */}
       <input
         type="text"
-        value={query} // Bind input value to query state
-        onChange={(e) => setQuery(e.target.value)} // Update query state on input change
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
         placeholder="Search GitHub users"
         className="input"
       />
-      {/* Display loading state */}
-      {loading && <p>Loading...</p>}
-      {/* Display error message if there's an error */}
-      {error && <p>{error}</p>}
       
+      {/* Input field for location */}
+      <input
+        type="text"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        placeholder="Location (optional)"
+        className="input"
+      />
+      
+      {/* Input field for minimum number of repositories */}
+      <input
+        type="number"
+        value={minRepos}
+        onChange={(e) => setMinRepos(Number(e.target.value))}
+        placeholder="Minimum Repos (optional)"
+        className="input"
+      />
+      
+      {/* Show loading state */}
+      {loading && <p>Loading...</p>}
+
+      {/* Show error message if something goes wrong */}
+      {error && <p>{error}</p>}
+
       {/* Display the list of users */}
       <div className="user-results">
         {users.length > 0 ? (
           users.map((user) => (
             <div key={user.id} className="user-card">
-              {/* Display user details */}
               <img src={user.avatar_url} alt={user.login} className="user-avatar" />
               <h3>{user.login}</h3>
               <p>{user.location || 'Location not available'}</p>
@@ -57,7 +91,6 @@ const Search = () => {
             </div>
           ))
         ) : (
-          // Display a message if no users are found
           <p>No users found</p>
         )}
       </div>
