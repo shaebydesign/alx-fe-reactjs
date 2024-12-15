@@ -2,8 +2,9 @@
   "name": "alx-fe-reactjs",
   "lockfileVersion": 3,
   "requires": true,
-   "scripts": {
-    "start": "react-scripts start"},
+  "scripts": {
+    "start": "react-scripts start"
+  },
   "packages": {
     "": {
       "dependencies": {
@@ -38,5 +39,9 @@
       "integrity": "sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==",
       "license": "MIT"
     }
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
