@@ -20,7 +20,7 @@ const App = () => {
         </main>
 
         <footer>
-          <p>Made with ❤️ by Your Name</p>
+          <p>Made with ❤️ by Shalom Metiboba</p>
         </footer>
       </div>
     </Router>
