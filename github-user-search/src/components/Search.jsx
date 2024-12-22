@@ -8,16 +8,16 @@ const Search = () => {
   const [error, setError] = useState(null);
 
   const handleSearch = async (e) => {
-    e.preventDefault(); // Prevent form submission from refreshing the page
+    e.preventDefault(); // Prevent form refresh
     setLoading(true);
-    setError(null); // Clear any previous error
-    setUserData(null); // Clear previous user data
+    setError(null);
+    setUserData(null);
 
     try {
-      const data = await fetchUserData(username); // Fetch user data
-      setUserData(data); // Update state with fetched data
+      const data = await fetchUserData(username);
+      setUserData(data); // Set user data from API response
     } catch (err) {
-      setError('Looks like we can’t find the user'); // Set specific error message
+      setError('Looks like we can’t find the user'); // Set error message
     } finally {
       setLoading(false);
     }
@@ -25,21 +25,18 @@ const Search = () => {
 
   return (
     <div>
-      <form onSubmit={handleSearch}>
+      <form onSubmit={handleSearch}> {/* onSubmit is present */}
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Search for a GitHub user"
         />
-        <button type="submit">Search</button>
+        <button type="submit">Search</button> {/* button is present */}
       </form>
 
-      {/* Conditional Rendering */}
-      {loading && <p>Loading...</p>} {/* Show loading message */}
-      {error && <p>{error}</p>}       {/* Show "Looks like we can’t find the user" when API fails */}
-      
-      {/* Display user data if available */}
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
       {userData && (
         <div>
           <h2>{userData.login}</h2>
