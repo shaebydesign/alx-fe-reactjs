@@ -1,7 +1,9 @@
-// src/App.jsx
+/// src/App.jsx
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import RecipeList from './components/RecipeList';
+import RecipeDetail from './components/RecipeDetail'; // Assuming you create a RecipeDetail component
 import { useRecipeStore } from './recipeStore';
 
 const App = () => {
@@ -18,11 +20,16 @@ const App = () => {
   setRecipes(recipes);
 
   return (
-    <div>
-      <h1>Recipe Sharing App</h1>
-      <SearchBar /> {/* Search input */}
-      <RecipeList /> {/* Filtered recipe list */}
-    </div>
+    <Router>
+      <div>
+        <h1>Recipe Sharing App</h1>
+        <SearchBar /> {/* Search input */}
+        <Routes>
+          <Route path="/" element={<RecipeList />} />
+          <Route path="/recipe/:id" element={<RecipeDetail />} /> {/* Recipe detail route */}
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
