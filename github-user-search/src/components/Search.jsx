@@ -8,18 +8,18 @@ const Search = () => {
   const [error, setError] = useState(null);
 
   const handleSearch = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    setLoading(true); // Show loading state
+    e.preventDefault(); // Prevent form submission from refreshing the page
+    setLoading(true);
     setError(null); // Clear any previous error
-    setUserData(null); // Clear previous user data
+    setUserData(null); // Clear previous data
 
     try {
       const data = await fetchUserData(username); // Fetch user data
-      setUserData(data); // Store fetched user data
+      setUserData(data); // Update state with fetched data
     } catch (err) {
-      setError('Looks like we can’t find the user'); // Display error message
+      setError('Looks like we can’t find the user'); // Set error message
     } finally {
-      setLoading(false); // Stop loading state
+      setLoading(false);
     }
   };
 
@@ -35,16 +35,22 @@ const Search = () => {
         <button type="submit">Search</button>
       </form>
 
-      {loading && <p>Loading...</p>} {/* Loading message */}
-      {error && <p>{error}</p>}       {/* Error message: "Looks like we can’t find the user" */}
+      {loading && <p>Loading...</p>} {/* Show while loading */}
+      {error && <p>{error}</p>}       {/* Display "Looks like we can’t find the user" */}
       
-      {/* Display user information if data is fetched */}
+      {/* Display user data if successfully fetched */}
       {userData && (
         <div>
           <h2>{userData.login}</h2>
-          <img src={userData.avatar_url} alt={userData.login} style={{ width: '100px', borderRadius: '50%' }} />
+          <img
+            src={userData.avatar_url}
+            alt={userData.login}
+            style={{ width: '100px', borderRadius: '50%' }}
+          />
           <h3>{userData.name}</h3>
-          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">View Profile</a>
+          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
+            View Profile
+          </a>
         </div>
       )}
     </div>
