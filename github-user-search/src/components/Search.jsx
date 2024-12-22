@@ -8,36 +8,37 @@ const Search = () => {
   const [error, setError] = useState(null);
 
   const handleSearch = async (e) => {
-    e.preventDefault(); // Prevent the form from refreshing the page
-    setLoading(true);
-    setError(null);
+    e.preventDefault(); // Prevent the default form submission behavior
+    setLoading(true); // Show loading state
+    setError(null); // Clear any previous error
+    setUserData(null); // Clear previous user data
 
     try {
-      const data = await fetchUserData(username); // Fetch user data from API
-      setUserData(data); // Set the fetched user data
+      const data = await fetchUserData(username); // Fetch user data
+      setUserData(data); // Store fetched user data
     } catch (err) {
-      setError('Looks like we can’t find the user'); // Handle error
+      setError('Looks like we can’t find the user'); // Display error message
     } finally {
-      setLoading(false);
+      setLoading(false); // Stop loading state
     }
   };
 
   return (
     <div>
-      <form onSubmit={handleSearch}> {/* Form submission handler */}
+      <form onSubmit={handleSearch}>
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Search for a GitHub user"
         />
-        <button type="submit">Search</button> {/* Button inside the form */}
+        <button type="submit">Search</button>
       </form>
 
-      {loading && <p>Loading...</p>}  {/* Display loading message */}
-      {error && <p>{error}</p>}       {/* Display error message */}
+      {loading && <p>Loading...</p>} {/* Loading message */}
+      {error && <p>{error}</p>}       {/* Error message: "Looks like we can’t find the user" */}
       
-      {/* Display user data if available */}
+      {/* Display user information if data is fetched */}
       {userData && (
         <div>
           <h2>{userData.login}</h2>
