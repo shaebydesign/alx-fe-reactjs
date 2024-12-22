@@ -1,26 +1,37 @@
-import React, { useState } from 'react';
-import { useRecipeStore } from './recipeStore';
+// src/components/AddRecipeForm.jsx
+import { useState } from 'react';
+import { useRecipeStore } from '../recipeStore';
+import { useNavigate } from 'react-router-dom';
 
 const AddRecipeForm = () => {
-  const [recipe, setRecipe] = useState('');
-  const addRecipe = useRecipeStore((state) => state.addRecipe);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const addRecipe = useRecipeStore(state => state.addRecipe);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (recipe.trim()) {
-      addRecipe(recipe);
-      setRecipe('');
-    }
+    const newRecipe = {
+      id: Date.now(), // Generate a unique id (could also be something else)
+      title,
+      description,
+    };
+    addRecipe(newRecipe); // Call the addRecipe action from Zustand
+    navigate('/'); // Navigate back to the recipe list or another page
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        value={recipe}
-        onChange={(e) => setRecipe(e.target.value)}
-        placeholder="Enter recipe name"
-        required
+        value={title}
+        onChange={(e) => setTitle(e.target.value)} // setTitle is the function to update the title state
+        placeholder="Recipe Title"
+      />
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)} // setDescription is the function to update the description state
+        placeholder="Recipe Description"
       />
       <button type="submit">Add Recipe</button>
     </form>
