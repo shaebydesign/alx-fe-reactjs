@@ -1,36 +1,32 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';  // We'll use Yup for validation
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+// Validation schema using Yup
+const validationSchema = Yup.object({
+  username: Yup.string()
+    .min(4, 'Username must be at least 4 characters')
+    .required('Username is required'),
+  email: Yup.string().email('Invalid email address').required('Email is required'),
+  password: Yup.string()
+    .min(6, 'Password must be at least 6 characters')
+    .required('Password is required')
+});
 
 const RegistrationForm = () => {
   return (
-    <div>
-      <h1>Register</h1>
-      <Formik
-        initialValues={{
-          username: '',
-          email: '',
-          password: '',
-        }}
-        validationSchema={Yup.object({
-          username: Yup.string()
-            .required('Username is required')
-            .min(3, 'Username must be at least 3 characters'),
-          email: Yup.string()
-            .email('Invalid email address')
-            .required('Email is required'),
-          password: Yup.string()
-            .required('Password is required')
-            .min(6, 'Password must be at least 6 characters'),
-        })}
-        onSubmit={(values) => {
-          // Simulate a mock API submission
-          console.log('Form submitted', values);
-        }}
-      >
+    <Formik
+      initialValues={{ username: '', email: '', password: '' }}
+      validationSchema={validationSchema}
+      onSubmit={(values) => {
+        // Here you can handle the form submission, for example by calling an API
+        console.log(values);
+      }}
+    >
+      {({ touched, errors }) => (
         <Form>
           <div>
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="username">Username</label>
             <Field
               type="text"
               id="username"
@@ -39,9 +35,8 @@ const RegistrationForm = () => {
             />
             <ErrorMessage name="username" component="div" className="error" />
           </div>
-
           <div>
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="email">Email</label>
             <Field
               type="email"
               id="email"
@@ -50,9 +45,8 @@ const RegistrationForm = () => {
             />
             <ErrorMessage name="email" component="div" className="error" />
           </div>
-
           <div>
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">Password</label>
             <Field
               type="password"
               id="password"
@@ -61,11 +55,12 @@ const RegistrationForm = () => {
             />
             <ErrorMessage name="password" component="div" className="error" />
           </div>
-
-          <button type="submit">Register</button>
+          <div>
+            <button type="submit">Submit</button>
+          </div>
         </Form>
-      </Formik>
-    </div>
+      )}
+    </Formik>
   );
 };
 
