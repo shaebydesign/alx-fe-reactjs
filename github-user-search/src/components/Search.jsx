@@ -1,48 +1,52 @@
 import React, { useState } from 'react';
-import { fetchUserData } from '../services/githubService';
+import { fetchUserData } from '../services/githubService'; // Import fetchUserData from githubService
 
 const Search = () => {
-  const [username, setUsername] = useState('');
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [username, setUsername] = useState(''); // State for storing the username input
+  const [userData, setUserData] = useState(null); // State for storing the fetched user data
+  const [loading, setLoading] = useState(false); // State to handle loading status
+  const [error, setError] = useState(null); // State for handling errors
 
   // Handle form submission
   const handleSearch = async (e) => {
-    e.preventDefault(); // Prevent page reload on form submission
-    setLoading(true); // Set loading state to true
-    setError(null); // Reset error state before each new request
+    e.preventDefault(); // Prevent form from refreshing the page
+    setLoading(true); // Set loading state to true while fetching data
+    setError(null); // Reset the error state before each new search
 
     try {
-      // Call the API and fetch user data based on the username
+      // Call the API to fetch user data based on the entered username
       const data = await fetchUserData(username);
-      setUserData(data); // Set the fetched data to state
+      setUserData(data); // Store the fetched user data in the state
     } catch (err) {
-      setError('Looks like we can’t find the user'); // Set error if something goes wrong
+      setError('Looks like we can’t find the user'); // Display error if API call fails
     } finally {
-      setLoading(false); // Set loading state to false after the request
+      setLoading(false); // Set loading to false after the API call finishes
     }
   };
 
   return (
     <div>
-      {/* Form for searching a GitHub user */}
+      {/* Search Form */}
       <form onSubmit={handleSearch}>
         <input
           type="text"
           value={username}
-          onChange={(e) => setUsername(e.target.value)} // Update username state
+          onChange={(e) => setUsername(e.target.value)} // Update username state with input value
           placeholder="Search for a GitHub user"
         />
-        <button type="submit">Search</button> {/* Button to submit the form */}
+        <button type="submit">Search</button> {/* Submit button */}
       </form>
 
-      {/* Conditionally render loading, error, or user data */}
+      {/* Display loading message while data is being fetched */}
       {loading && <p>Loading...</p>}
+
+      {/* Display error message if user is not found */}
       {error && <p>{error}</p>}
+
+      {/* Display user data if fetch is successful */}
       {userData && (
         <div>
-          <img src={userData.avatar_url} alt={userData.name} />
+          <img src={userData.avatar_url} alt={userData.name} style={{ width: '100px', borderRadius: '50%' }} />
           <h2>{userData.name}</h2>
           <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
             View Profile
