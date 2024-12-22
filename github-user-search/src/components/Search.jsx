@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fetchUserData } from '../services/githubService'; // Import fetchUserData from githubService
+import { fetchUserData } from '../services/githubService'; // Import the fetchUserData function
 
 const Search = () => {
   const [username, setUsername] = useState(''); // State for storing the username input
@@ -46,8 +46,9 @@ const Search = () => {
       {/* Display user data if fetch is successful */}
       {userData && (
         <div>
-          <img src={userData.avatar_url} alt={userData.name} style={{ width: '100px', borderRadius: '50%' }} />
-          <h2>{userData.name}</h2>
+          <h2>{userData.login}</h2> {/* Display the GitHub username */}
+          <img src={userData.avatar_url} alt={userData.login} style={{ width: '100px', borderRadius: '50%' }} />
+          <h3>{userData.name}</h3>
           <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
             View Profile
           </a>
