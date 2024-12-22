@@ -1,23 +1,23 @@
 // src/recipeStore.js
 import create from 'zustand';
 
-const useRecipeStore = create(set => ({
-  recipes: [],
-  searchTerm: '',
-  filteredRecipes: [],
-
-  // Set the search term
-  setSearchTerm: (term) => set({ searchTerm: term }),
-
-  // Filter the recipes based on the search term
-  filterRecipes: () => set(state => ({
-    filteredRecipes: state.recipes.filter(recipe =>
-      recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-    )
+const useRecipeStore = create((set) => ({
+  recipes: [], // Array of all recipes
+  favorites: [], // Array to store favorite recipe IDs
+  addFavorite: (recipeId) => set((state) => ({
+    favorites: [...state.favorites, recipeId], // Adds a recipe to favorites
   })),
-
-  // Optionally, initialize or fetch recipes
-  setRecipes: (recipes) => set({ recipes })
+  removeFavorite: (recipeId) => set((state) => ({
+    favorites: state.favorites.filter((id) => id !== recipeId), // Removes a recipe from favorites
+  })),
+  recommendations: [], // List of recommended recipes
+  generateRecommendations: () => set((state) => {
+    // Generate recommendations based on favorites (can be enhanced)
+    const recommended = state.recipes.filter((recipe) =>
+      state.favorites.includes(recipe.id) && Math.random() > 0.5 // Mock recommendation logic
+    );
+    return { recommendations: recommended };
+  }),
 }));
 
-export { useRecipeStore };
+export default useRecipeStore;

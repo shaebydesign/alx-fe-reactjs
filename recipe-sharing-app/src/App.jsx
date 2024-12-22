@@ -3,7 +3,9 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RecipeList from './components/RecipeList';
 import RecipeDetail from './components/RecipeDetail'; // Assuming you have a RecipeDetail component
-import AddRecipeForm from './components/AddRecipeForm'; // Import AddRecipeForm component
+import AddRecipeForm from './components/AddRecipeForm';
+import FavoritesList from './components/FavoritesList'; // Importing FavoritesList
+import RecommendationsList from './components/RecommendationsList'; // Importing RecommendationsList
 
 const App = () => {
   return (
@@ -13,7 +15,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<RecipeList />} />
           <Route path="/recipe/:id" element={<RecipeDetail />} />
-          <Route path="/add-recipe" element={<AddRecipeForm />} /> {/* Route for adding a recipe */}
+          <Route path="/add-recipe" element={<AddRecipeForm />} />
+          <Route path="/favorites" element={<FavoritesList />} /> {/* Route for favorites */}
+          <Route path="/recommendations" element={<RecommendationsList />} /> {/* Route for recommendations */}
         </Routes>
       </div>
     </Router>
