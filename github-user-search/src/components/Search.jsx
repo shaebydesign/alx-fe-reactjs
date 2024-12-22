@@ -11,13 +11,13 @@ const Search = () => {
     e.preventDefault(); // Prevent form submission from refreshing the page
     setLoading(true);
     setError(null); // Clear any previous error
-    setUserData(null); // Clear previous data
+    setUserData(null); // Clear previous user data
 
     try {
       const data = await fetchUserData(username); // Fetch user data
       setUserData(data); // Update state with fetched data
     } catch (err) {
-      setError('Looks like we can’t find the user'); // Set error message
+      setError('Looks like we can’t find the user'); // Set specific error message
     } finally {
       setLoading(false);
     }
@@ -35,10 +35,11 @@ const Search = () => {
         <button type="submit">Search</button>
       </form>
 
-      {loading && <p>Loading...</p>} {/* Show while loading */}
-      {error && <p>{error}</p>}       {/* Display "Looks like we can’t find the user" */}
+      {/* Conditional Rendering */}
+      {loading && <p>Loading...</p>} {/* Show loading message */}
+      {error && <p>{error}</p>}       {/* Show "Looks like we can’t find the user" when API fails */}
       
-      {/* Display user data if successfully fetched */}
+      {/* Display user data if available */}
       {userData && (
         <div>
           <h2>{userData.login}</h2>
