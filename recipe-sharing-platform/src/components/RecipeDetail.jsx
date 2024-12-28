@@ -51,13 +51,17 @@ function RecipeDetail() {
       <div className="text-lg text-gray-800 mb-6">
         <h2 className="text-2xl font-semibold mb-2">Ingredients</h2>
         <ul className="list-disc pl-6 mb-6">
-          <li>Ingredient 1</li>
-          <li>Ingredient 2</li>
-          <li>Ingredient 3</li>
+          {recipe.ingredients.map((ingredient, index) => (
+            <li key={index}>{ingredient}</li>
+          ))}
         </ul>
 
         <h2 className="text-2xl font-semibold mb-2">Instructions</h2>
-        <p>Step-by-step instructions will go here.</p>
+        <ol className="list-decimal pl-6">
+          {recipe.instructions.map((instruction, index) => (
+            <li key={index}>{instruction}</li>
+          ))}
+        </ol>
       </div>
     </div>
   );
