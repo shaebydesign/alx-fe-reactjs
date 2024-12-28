@@ -2,9 +2,9 @@
 module.exports = {
   content: [
     './index.html',
-    './src/**/*.{js,jsx,ts,tsx}', // This ensures Tailwind looks at your JSX/TSX/HTML files
+    './src/**/*.{js,jsx,ts,tsx}', // Adjust this to match your file types
   ],
-  darkMode: 'class', // Use 'media' if you prefer automatic dark mode based on system preferences
+  darkMode: 'class', // Or 'media' if you prefer the system theme
   theme: {
     extend: {},
   },
