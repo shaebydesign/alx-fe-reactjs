@@ -1,12 +1,14 @@
+import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import PostsComponent from './PostsComponent';  // Assuming this is where you will handle the data fetching
+import PostsComponent from './components/PostsComponent';  // Make sure the path is correct
 
+// Initialize React Query client
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <PostsComponent />
+      <PostsComponent />  {/* Render the PostsComponent here */}
     </QueryClientProvider>
   );
 }
