@@ -1,14 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{js,jsx,ts,tsx}", // Make sure this points to the right files in your src folder
+    './index.html',
+    './src/**/*.{js,jsx,ts,tsx}', // This ensures Tailwind looks at your JSX/TSX/HTML files
   ],
-  darkMode: 'class', // You can set it to 'media' if you want automatic dark mode based on system preference
+  darkMode: 'class', // Use 'media' if you prefer automatic dark mode based on system preferences
   theme: {
-    extend: {},
-  },
-  variants: {
     extend: {},
   },
   plugins: [],
