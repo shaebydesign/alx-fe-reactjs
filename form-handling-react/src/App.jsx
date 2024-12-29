@@ -1,12 +1,11 @@
 import React from 'react';
-import './App.css';
-import FormikForm from './components/formikForm.js';  // Import your formikForm.js
+import FormikForm from './components/formikForm';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <h1>Registration Form</h1>
-      <FormikForm /> {/* This will render your Formik form */}
+      <FormikForm />
     </div>
   );
 }
