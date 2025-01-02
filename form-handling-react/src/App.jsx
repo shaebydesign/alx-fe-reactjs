@@ -1,22 +1,17 @@
-// src/App.jsx
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Profile from './components/Profile';
 import ProfileDetails from './components/ProfileDetails';
-import ProfileSettings from './components/ProfileSettings';
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="profile" element={<Profile />}>
-          <Route path="details" element={<ProfileDetails />} />
-          <Route path="settings" element={<ProfileSettings />} />
-        </Route>
+        <Route path="/" element={<Profile />} />
+        <Route path="/profile-details" element={<ProfileDetails />} />
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
