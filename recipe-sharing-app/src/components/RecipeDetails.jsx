@@ -1,9 +1,13 @@
 import { useRecipeStore } from './recipeStore';
-import { Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import EditRecipeForm from './EditRecipeForm';
 import DeleteRecipeButton from './DeleteRecipeButton';
 
-const RecipeDetails = ({ recipeId }) => {
+const RecipeDetails = () => {
+  // Get the recipeId from the URL params
+  const { id } = useParams();
+  const recipeId = parseInt(id, 10); // Ensure the ID is treated as an integer
+
   const recipe = useRecipeStore(state => state.recipes.find(r => r.id === recipeId));
 
   if (!recipe) {
@@ -18,7 +22,7 @@ const RecipeDetails = ({ recipeId }) => {
       {/* Edit and Delete Recipe */}
       <EditRecipeForm recipe={recipe} />
       <DeleteRecipeButton recipeId={recipeId} />
-      
+
       {/* Link to go back */}
       <Link to="/">Back to Recipe List</Link>
     </div>
