@@ -4,10 +4,11 @@ import EditRecipeForm from './EditRecipeForm';
 import DeleteRecipeButton from './DeleteRecipeButton';
 
 const RecipeDetails = () => {
-  // Get the recipeId from the URL params
+  // Extract recipeId from the URL params
   const { id } = useParams();
-  const recipeId = parseInt(id, 10); // Ensure the ID is treated as an integer
+  const recipeId = parseInt(id, 10);  // Convert to an integer to match the recipe ID format
 
+  // Find the recipe from the store
   const recipe = useRecipeStore(state => state.recipes.find(r => r.id === recipeId));
 
   if (!recipe) {
@@ -19,11 +20,15 @@ const RecipeDetails = () => {
       <h1>{recipe.title}</h1>
       <p>{recipe.description}</p>
 
-      {/* Edit and Delete Recipe */}
-      <EditRecipeForm recipe={recipe} />
-      <DeleteRecipeButton recipeId={recipeId} />
+      {/* Display recipe details */}
+      <p><strong>Ingredients:</strong> {recipe.ingredients.join(", ")}</p>
+      <p><strong>Instructions:</strong> {recipe.instructions}</p>
 
-      {/* Link to go back */}
+      {/* Provide options for editing and deleting the recipe */}
+      <EditRecipeForm recipe={recipe} />
+      <DeleteRecipeButton recipeId={recipe.id} /> {/* Reference recipe.id here */}
+
+      {/* Link to go back to the recipe list */}
       <Link to="/">Back to Recipe List</Link>
     </div>
   );
