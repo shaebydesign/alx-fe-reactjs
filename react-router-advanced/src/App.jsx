@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Profile from './components/Profile';  // Corrected path to match the actual file name
 import BlogPost from './components/BlogPost'; // Import BlogPost component
+import ProtectedRoute from './components/ProtectedRoute';  // Import ProtectedRoute
 
 function App() {
   return (
@@ -12,8 +13,8 @@ function App() {
           {/* Main Route */}
           <Route path="/" element={<Home />} />  {/* Home page as an example */}
 
-          {/* Route for Profile */}
-          <Route path="/profile" element={<Profile />} />  {/* Profile page */}
+          {/* Protected Route for Profile */}
+          <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />  {/* Protected Profile page */}
 
           {/* Dynamic Route for Blog Post */}
           <Route path="/blog/:id" element={<BlogPost />} />  {/* BlogPost page */}
