@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Profile from './components/Profile';  // Ensure the path and case match the actual file name
+import Profile from './components/Profile';  // Corrected path to match the actual file name
+import BlogPost from './components/BlogPost'; // Import BlogPost component
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
 
           {/* Route for Profile */}
           <Route path="/profile" element={<Profile />} />  {/* Profile page */}
+
+          {/* Dynamic Route for Blog Post */}
+          <Route path="/blog/:id" element={<BlogPost />} />  {/* BlogPost page */}
         </Routes>
       </div>
     </Router>
