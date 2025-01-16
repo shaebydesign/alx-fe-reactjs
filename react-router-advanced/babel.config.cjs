@@ -1,5 +1,4 @@
-
-import { TextEncoder, TextDecoder } from 'util';
-
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
+ module.exports = {
+    presets: ["@babel/preset-env", "@babel/preset-react"],
+  };
+  
