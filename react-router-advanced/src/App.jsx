@@ -1,11 +1,27 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth'; // Import the custom hook
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Profile from './components/Profile';  // Ensure the path and case match the actual file name
 
-const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = useAuth();
+function App() {
+  return (
+    <Router>
+      <div>
+        <h1>My React App</h1>
+        <Routes>
+          {/* Main Route */}
+          <Route path="/" element={<Home />} />  {/* Home page as an example */}
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
+          {/* Route for Profile */}
+          <Route path="/profile" element={<Profile />} />  {/* Profile page */}
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+// Simple Home Component as an example
+const Home = () => {
+  return <div>Welcome to the Home Page!</div>;
 };
 
-export default ProtectedRoute;
+export default App;
